@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StepStore — Fresh Kicks. Next Level Style.</title>
+  <link rel="icon" type="image/svg+xml" href="img/icons/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/favicon-180x180.png">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="index.html" class="logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="catalogo.html?sort=newest">Novedades</a>
+      <a href="catalogo.html">Marcas</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-action-btn search-trigger" aria-label="Buscar">🔍</button>
+      <a href="wishlist.html" class="nav-action-btn" aria-label="Favoritos">
+        ❤️
+        <span class="wishlist-badge" style="display:none">0</span>
+      </a>
+      <a href="carrito.html" class="nav-action-btn" aria-label="Carrito">
+        🛒
+        <span class="cart-badge" style="display:none">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-overlay"></div>
+<div id="mobile-menu">
+  <div class="mobile-logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
+  <a href="index.html" class="mobile-nav-link">Inicio</a>
+  <a href="catalogo.html" class="mobile-nav-link">Catálogo</a>
+  <a href="catalogo.html?sort=newest" class="mobile-nav-link">Novedades</a>
+  <a href="wishlist.html" class="mobile-nav-link">❤️ Favoritos</a>
+  <a href="carrito.html" class="mobile-nav-link">🛒 Carrito</a>
+</div>
+
+<!-- Search Overlay -->
+<div id="search-overlay">
+  <div class="search-wrapper">
+    <input class="search-input" type="text" placeholder="Busca zapatillas, marcas..." autocomplete="off">
+    <button class="search-close" onclick="closeSearch()">✕</button>
+  </div>
+  <div id="search-results"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">STEPSTORE</div>
+  <div class="hero-image-col">
+    <img src="https://picsum.photos/seed/hero1/900/900" alt="Hero">
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">
+        Temporada 2026 — Nueva colección
+      </div>
+      <h1>
+        FRESH
+        <span class="highlight">KICKS.</span>
+        NEXT LEVEL STYLE.
+      </h1>
+      <p class="hero-subtitle">Las mejores zapatillas streetwear del momento. Marcas premium, estilo sin límites.</p>
+      <div class="hero-cta">
+        <a href="catalogo.html" class="btn-primary">Explorar Catálogo →</a>
+        <a href="catalogo.html?sort=newest" class="btn-outline">Ver Novedades</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Modelos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">6</div>
+          <div class="stat-label">Marcas</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">4.7★</div>
+          <div class="stat-label">Valoración</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">48h</div>
+          <div class="stat-label">Envío</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRENDING NOW -->
+<section class="trending-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>TRENDING <span class="neon-text">NOW</span></h2>
+      <p>Los modelos más buscados del momento</p>
+    </div>
+    <div class="trending-grid" id="trending-grid">
+      <!-- Cards se inyectan por JS -->
+    </div>
+    <div style="text-align:center; margin-top:40px;">
+      <a href="catalogo.html" class="btn-neon-outline">Ver todo el catálogo →</a>
+    </div>
+  </div>
+</section>
+
+<div class="neon-divider"></div>
+
+<!-- CATEGORÍAS -->
+<section class="categories-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>EXPLORA POR <span class="neon-text">CATEGORÍA</span></h2>
+      <p>Encuentra el par perfecto para cada ocasión</p>
+    </div>
+    <div class="categories-grid">
+      <a href="catalogo.html?cat=sneakers" class="category-card">
+        <img src="https://picsum.photos/seed/cat-sneakers/600/400" alt="Sneakers">
+        <div class="category-overlay">
+          <span class="category-name">SNEAKERS</span>
+          <span class="category-count">8 modelos</span>
+          <span class="category-arrow">Ver colección →</span>
+        </div>
+      </a>
+      <a href="catalogo.html?cat=basketball" class="category-card">
+        <img src="https://picsum.photos/seed/cat-basket/600/400" alt="Basketball">
+        <div class="category-overlay">
+          <span class="category-name">BASKETBALL</span>
+          <span class="category-count">4 modelos</span>
+          <span class="category-arrow">Ver colección →</span>
+        </div>
+      </a>
+      <a href="catalogo.html?cat=running" class="category-card">
+        <img src="https://picsum.photos/seed/cat-running/600/400" alt="Running">
+        <div class="category-overlay">
+          <span class="category-name">RUNNING</span>
+          <span class="category-count">4 modelos</span>
+          <span class="category-arrow">Ver colección →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>NUESTRAS <span class="neon-text">MARCAS</span></h2>
+    </div>
+  </div>
+  <div class="brands-track-wrap">
+    <div class="brands-track">
+      <!-- Duplicado para loop infinito -->
+      <div class="brand-item">NIKE</div>
+      <div class="brand-item">ADIDAS</div>
+      <div class="brand-item">JORDAN</div>
+      <div class="brand-item">NEW BALANCE</div>
+      <div class="brand-item">VANS</div>
+      <div class="brand-item">CONVERSE</div>
+      <div class="brand-item">NIKE</div>
+      <div class="brand-item">ADIDAS</div>
+      <div class="brand-item">JORDAN</div>
+      <div class="brand-item">NEW BALANCE</div>
+      <div class="brand-item">VANS</div>
+      <div class="brand-item">CONVERSE</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
+        <p>Las mejores zapatillas streetwear en un solo lugar. Calidad premium, estilo sin límites, entrega en toda Colombia.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link">📸</a>
+          <a href="#" class="social-link">🐦</a>
+          <a href="#" class="social-link">▶️</a>
+          <a href="#" class="social-link">💼</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="catalogo.html?sort=newest">Novedades</a></li>
+          <li><a href="catalogo.html?badge=hot">Más vendidos</a></li>
+          <li><a href="catalogo.html?pmax=200000">Ofertas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Envíos y devoluciones</a></li>
+          <li><a href="#">Guía de tallas</a></li>
+          <li><a href="#">Preguntas frecuentes</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-newsletter">
+        <h4>Newsletter</h4>
+        <p>Recibe drops exclusivos y descuentos antes que nadie.</p>
+        <div class="newsletter-form">
+          <input class="newsletter-input" type="email" placeholder="tu@email.com">
+          <button class="newsletter-btn" onclick="handleNewsletter()">→</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 StepStore. Todos los derechos reservados.</p>
+      <div class="payment-methods">
+        <span>PSE</span>
+        <span>Visa</span>
+        <span>MC</span>
+        <span>Nequi</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="scroll-top" aria-label="Volver arriba">↑</button>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/search.js"></script>
+<script src="js/ui.js"></script>
+<script>
+  // Render trending products
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.getElementById('trending-grid');
+    const trending = getTrendingProducts().slice(0, 4);
+    grid.innerHTML = trending.map(p => createProductCard(p)).join('');
+  });
+
+  function handleNewsletter() {
+    const input = document.querySelector('.newsletter-input');
+    if (input.value && input.value.includes('@')) {
+      showToast('¡Suscrito exitosamente!', 'success');
+      input.value = '';
+    } else {
+      showToast('Por favor ingresa un email válido', 'error');
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Background rounded square -->
+  <rect width="100" height="100" rx="20" ry="20" fill="#0A0A0A"/>
+
+  <!-- First S — white -->
+  <text
+    x="9"
+    y="68"
+    font-family="Arial Black, Arial, Helvetica, sans-serif"
+    font-weight="900"
+    font-size="56"
+    fill="#FFFFFF"
+    letter-spacing="-2"
+  >S</text>
+
+  <!-- Second S — neon green -->
+  <text
+    x="50"
+    y="68"
+    font-family="Arial Black, Arial, Helvetica, sans-serif"
+    font-weight="900"
+    font-size="56"
+    fill="#39FF14"
+    letter-spacing="-2"
+  >S</text>
+
+  <!-- Neon green glow filter -->
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Shoe sole — minimal arc in neon green -->
+  <path
+    d="M 8 83 Q 30 93 55 91 Q 75 90 92 83"
+    stroke="#39FF14"
+    stroke-width="5"
+    fill="none"
+    stroke-linecap="round"
+    filter="url(#glow)"
+  />
+
+  <!-- Small heel bump -->
+  <circle cx="90" cy="83" r="3.5" fill="#39FF14"/>
+</svg>

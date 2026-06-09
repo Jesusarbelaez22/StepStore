@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Producto — StepStore</title>
+  <link rel="icon" type="image/svg+xml" href="img/icons/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/favicon-180x180.png">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/producto.css">
+</head>
+<body class="product-page">
+
+<!-- NAVBAR -->
+<nav class="navbar scrolled">
+  <div class="navbar-inner">
+    <button class="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    <a href="index.html" class="logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</a>
+    <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html" class="active">Catálogo</a>
+      <a href="catalogo.html?sort=newest">Novedades</a>
+      <a href="catalogo.html">Marcas</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-action-btn search-trigger">🔍</button>
+      <a href="wishlist.html" class="nav-action-btn">❤️<span class="wishlist-badge" style="display:none">0</span></a>
+      <a href="carrito.html" class="nav-action-btn">🛒<span class="cart-badge" style="display:none">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<div id="mobile-overlay"></div>
+<div id="mobile-menu">
+  <div class="mobile-logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
+  <a href="index.html" class="mobile-nav-link">Inicio</a>
+  <a href="catalogo.html" class="mobile-nav-link">Catálogo</a>
+  <a href="wishlist.html" class="mobile-nav-link">❤️ Favoritos</a>
+  <a href="carrito.html" class="mobile-nav-link">🛒 Carrito</a>
+</div>
+
+<div id="search-overlay">
+  <div class="search-wrapper">
+    <input class="search-input" type="text" placeholder="Busca zapatillas, marcas..." autocomplete="off">
+    <button class="search-close" onclick="closeSearch()">✕</button>
+  </div>
+  <div id="search-results"></div>
+</div>
+
+<!-- BREADCRUMB -->
+<div style="background:var(--bg-secondary); border-bottom:1px solid var(--border); padding:14px 0;">
+  <div class="container">
+    <div style="display:flex; gap:8px; font-size:0.85rem; color:var(--text-secondary);" id="breadcrumb">
+      <a href="index.html" style="color:var(--text-secondary)">Inicio</a>
+      <span>›</span>
+      <a href="catalogo.html" style="color:var(--text-secondary)">Catálogo</a>
+      <span>›</span>
+      <span id="breadcrumb-name">Producto</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT LAYOUT -->
+<div class="container">
+  <div class="product-layout" id="product-layout">
+    <!-- Cargando... -->
+    <div style="text-align:center; padding:60px; grid-column:1/-1; color:var(--text-secondary);">Cargando producto...</div>
+  </div>
+</div>
+
+<!-- PRODUCT TABS -->
+<div class="container">
+  <div class="product-tabs" id="product-tabs" style="display:none;">
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('desc')">Descripción</button>
+      <button class="tab-btn" onclick="switchTab('specs')">Especificaciones</button>
+      <button class="tab-btn" onclick="switchTab('reviews')">Reseñas</button>
+    </div>
+    <div class="tab-panel active" id="tab-desc"></div>
+    <div class="tab-panel" id="tab-specs"></div>
+    <div class="tab-panel" id="tab-reviews"></div>
+  </div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<section class="related-section" id="related-section" style="display:none;">
+  <div class="container">
+    <div class="section-header">
+      <h2>TAMBIÉN TE PUEDE <span class="neon-text">GUSTAR</span></h2>
+    </div>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 StepStore. Todos los derechos reservados.</p>
+      <div class="payment-methods"><span>PSE</span><span>Visa</span><span>MC</span><span>Nequi</span></div>
+    </div>
+  </div>
+</footer>
+
+<button id="scroll-top">↑</button>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/search.js"></script>
+<script src="js/ui.js"></script>
+<script>
+  let currentProduct = null;
+  let selectedSize = null;
+  let selectedQty = 1;
+
+  function getIdFromURL() {
+    return new URLSearchParams(window.location.search).get('id');
+  }
+
+  function switchImage(src, thumbEl) {
+    document.getElementById('main-product-img').src = src;
+    document.querySelectorAll('.thumb-wrap').forEach(t => t.classList.remove('active'));
+    thumbEl.classList.add('active');
+  }
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      const names = ['desc','specs','reviews'];
+      b.classList.toggle('active', names[i] === name);
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  function selectSize(size, btn) {
+    selectedSize = size;
+    document.querySelectorAll('.size-btn-product').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function changeQty(delta) {
+    selectedQty = Math.max(1, selectedQty + delta);
+    document.getElementById('qty-display').textContent = selectedQty;
+  }
+
+  function addToCartProduct() {
+    if (!selectedSize) { showToast('Por favor selecciona una talla', 'error'); return; }
+    addToCart(currentProduct.id, selectedSize, selectedQty);
+    showToast(`¡${currentProduct.name} agregado al carrito!`, 'success');
+    animateCartBadge();
+  }
+
+  function toggleWishlistProduct() {
+    const btn = document.getElementById('wishlist-main-btn');
+    const added = toggleWishlist(currentProduct.id);
+    btn.classList.toggle('active', added);
+    btn.querySelector('.heart-icon').textContent = added ? '♥' : '♡';
+    showToast(added ? '¡Agregado a favoritos!' : 'Eliminado de favoritos', added ? 'success' : 'info');
+  }
+
+  function showSizeGuide() {
+    openModal(`
+      <h3 style="margin-bottom:20px;font-size:1.5rem;">Guía de Tallas</h3>
+      <table class="size-guide-table">
+        <thead><tr><th>EU</th><th>US M</th><th>US W</th><th>CM</th></tr></thead>
+        <tbody>
+          ${[[36,'4','5.5','22.5'],[37,'4.5','6','23'],[38,'5','6.5','23.5'],[39,'6','7.5','24.5'],
+             [40,'7','8.5','25'],[41,'8','9.5','26'],[42,'8.5','10','26.5'],[43,'9.5','11','27.5'],
+             [44,'10','11.5','28'],[45,'11','12.5','29'],[46,'12','13','30']].map(r =>
+            `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}
+        </tbody>
+      </table>
+      <p style="margin-top:14px;font-size:0.8rem;color:var(--text-secondary);">* Para mejor ajuste, mide tu pie en posición de pie al final del día.</p>
+    `);
+  }
+
+  function renderProduct(product) {
+    currentProduct = product;
+    document.title = `${product.name} — StepStore`;
+    document.getElementById('breadcrumb-name').textContent = product.name;
+
+    const inWish = isInWishlist(product.id);
+    const discount = product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : null;
+
+    document.getElementById('product-layout').innerHTML = `
+      <!-- Gallery -->
+      <div class="gallery-col">
+        <div class="main-image-wrap">
+          <img id="main-product-img" src="${product.images[0]}" alt="${product.name}">
+          ${product.badge ? `<span class="badge-gallery badge badge-${product.badge.toLowerCase()}">${product.badge}</span>` : ''}
+        </div>
+        <div class="thumbnails">
+          ${product.images.map((img, i) => `
+            <div class="thumb-wrap ${i === 0 ? 'active' : ''}" onclick="switchImage('${img}', this)">
+              <img src="${img}" alt="Vista ${i+1}">
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="product-info-col">
+        <span class="product-brand-tag">${product.brand}</span>
+        <h1 class="product-title">${product.name}</h1>
+
+        <div class="product-rating-row">
+          <div class="product-stars">${renderStars(product.rating)}</div>
+          <span style="font-weight:600">${product.rating}</span>
+          <span class="review-count">(${product.reviews} reseñas)</span>
+        </div>
+
+        <div class="product-price-row">
+          <span class="product-price-current">${formatPrice(product.price)}</span>
+          ${product.originalPrice ? `
+            <span class="product-price-original">${formatPrice(product.originalPrice)}</span>
+            <span class="product-discount-badge">-${discount}%</span>
+          ` : ''}
+        </div>
+
+        <!-- Size selector -->
+        <div>
+          <div class="selector-label">
+            <span>Talla ${selectedSize ? `— EU ${selectedSize}` : ''}</span>
+            <button class="size-guide-link" onclick="showSizeGuide()">Guía de tallas</button>
+          </div>
+          <div class="size-grid-product" id="size-grid">
+            ${product.sizes.map(s => `
+              <button class="size-btn-product" data-size="${s}" onclick="selectSize(${s}, this)">${s}</button>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Quantity -->
+        <div class="qty-row">
+          <span class="qty-label">Cantidad</span>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <div class="qty-input" id="qty-display">1</div>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="product-cta">
+          <button class="btn-add-main" onclick="addToCartProduct()">AGREGAR AL CARRITO</button>
+          <button class="btn-wishlist-main ${inWish ? 'active' : ''}" id="wishlist-main-btn" onclick="toggleWishlistProduct()">
+            <span class="heart-icon">${inWish ? '♥' : '♡'}</span> ${inWish ? 'EN FAVORITOS' : 'AGREGAR A FAVORITOS'}
+          </button>
+        </div>
+
+        <!-- Meta -->
+        <div class="product-meta">
+          <div class="meta-row"><span class="meta-label">Categoría</span><span class="meta-value" style="text-transform:capitalize">${product.category}</span></div>
+          <div class="meta-row"><span class="meta-label">Rating</span><span class="meta-value">${product.rating} / 5 ★</span></div>
+          <div class="meta-row"><span class="meta-label">Tallas</span><span class="meta-value">EU ${product.sizes[0]} — ${product.sizes[product.sizes.length-1]}</span></div>
+          <div class="meta-row"><span class="meta-label">Envío</span><span class="meta-neon">Gratis en pedidos +$200.000</span></div>
+        </div>
+      </div>
+    `;
+
+    // Tabs content
+    document.getElementById('tab-desc').innerHTML = `<p>${product.description}</p>`;
+    document.getElementById('tab-specs').innerHTML = `
+      <table class="specs-table">
+        ${Object.entries(product.specs).map(([k,v]) => `<tr><td style="text-transform:capitalize">${k}</td><td>${v}</td></tr>`).join('')}
+      </table>
+    `;
+    document.getElementById('tab-reviews').innerHTML = generateFakeReviews(product);
+
+    document.getElementById('product-tabs').style.display = '';
+    document.getElementById('related-section').style.display = '';
+
+    // Related products
+    const related = PRODUCTS.filter(p => p.id !== product.id && (p.brand === product.brand || p.category === product.category)).slice(0, 4);
+    document.getElementById('related-grid').innerHTML = related.map(p => createProductCard(p)).join('');
+    updateAllWishlistButtons();
+  }
+
+  function generateFakeReviews(product) {
+    const names = ['Carlos M.', 'Valentina R.', 'Andrés P.', 'Sofía L.'];
+    const texts = [
+      'Excelente calidad, muy cómodas desde el primer día. Las recomiendo totalmente.',
+      'El diseño es increíble y la entrega fue súper rápida. Muy satisfecha.',
+      'Talla perfecta, justo como se indica en la guía. El material es premium.',
+      'Las mejores zapatillas que he comprado. Se ven aún mejor en persona.'
+    ];
+    return names.map((n, i) => `
+      <div class="review-item">
+        <div class="review-header">
+          <div class="reviewer-avatar">${n[0]}</div>
+          <div>
+            <div class="reviewer-name">${n}</div>
+            <div class="review-date">Hace ${i + 1} semana${i > 0 ? 's' : ''}</div>
+          </div>
+          <div style="margin-left:auto;">${renderStars(5 - (i % 2) * 0.5)}</div>
+        </div>
+        <p class="review-text">${texts[i]}</p>
+      </div>
+    `).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const id = getIdFromURL();
+    const product = id ? getProductById(parseInt(id)) : null;
+    if (product) {
+      renderProduct(product);
+    } else {
+      document.getElementById('product-layout').innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1">
+          <div class="empty-icon">👟</div>
+          <h3>Producto no encontrado</h3>
+          <p>El producto que buscas no existe o fue removido.</p>
+          <a href="catalogo.html" class="btn-primary">Ir al catálogo</a>
+        </div>`;
+    }
+  });
+</script>
+</body>
+</html>

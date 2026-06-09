@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito — StepStore</title>
+  <link rel="icon" type="image/svg+xml" href="img/icons/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/favicon-180x180.png">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/carrito.css">
+</head>
+<body class="cart-page">
+
+<nav class="navbar scrolled">
+  <div class="navbar-inner">
+    <button class="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    <a href="index.html" class="logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</a>
+    <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="catalogo.html?sort=newest">Novedades</a>
+      <a href="catalogo.html">Marcas</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-action-btn search-trigger">🔍</button>
+      <a href="wishlist.html" class="nav-action-btn">❤️<span class="wishlist-badge" style="display:none">0</span></a>
+      <a href="carrito.html" class="nav-action-btn">🛒<span class="cart-badge" style="display:none">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<div id="mobile-overlay"></div>
+<div id="mobile-menu">
+  <div class="mobile-logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
+  <a href="index.html" class="mobile-nav-link">Inicio</a>
+  <a href="catalogo.html" class="mobile-nav-link">Catálogo</a>
+  <a href="wishlist.html" class="mobile-nav-link">❤️ Favoritos</a>
+  <a href="carrito.html" class="mobile-nav-link">🛒 Carrito</a>
+</div>
+
+<div id="search-overlay">
+  <div class="search-wrapper">
+    <input class="search-input" type="text" placeholder="Busca zapatillas, marcas..." autocomplete="off">
+    <button class="search-close" onclick="closeSearch()">✕</button>
+  </div>
+  <div id="search-results"></div>
+</div>
+
+<div class="cart-hero">
+  <div class="container">
+    <h1>MI CARRITO</h1>
+    <div class="cart-count-header" id="cart-count-header"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="cart-root"></div>
+</div>
+
+<footer class="footer" style="margin-top:60px;">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 StepStore. Todos los derechos reservados.</p>
+      <div class="payment-methods"><span>PSE</span><span>Visa</span><span>MC</span><span>Nequi</span></div>
+    </div>
+  </div>
+</footer>
+
+<button id="scroll-top">↑</button>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/search.js"></script>
+<script src="js/ui.js"></script>
+<script>
+  function renderCart() {
+    const cart = getCart();
+    const root = document.getElementById('cart-root');
+
+    document.getElementById('cart-count-header').textContent =
+      cart.length ? `${getCartCount()} producto${getCartCount() !== 1 ? 's' : ''} en tu carrito` : '';
+
+    if (!cart.length) {
+      root.innerHTML = `
+        <div class="empty-cart">
+          <div class="empty-cart-icon">🛒</div>
+          <h2>TU CARRITO ESTÁ VACÍO</h2>
+          <p>Parece que aún no has agregado nada.<br>¡Hay increíbles kicks esperándote!</p>
+          <a href="catalogo.html" class="btn-primary">Explorar catálogo →</a>
+        </div>`;
+      return;
+    }
+
+    const totals = getCartTotal();
+    const discount = getAppliedDiscount();
+
+    root.innerHTML = `
+      <div class="cart-layout">
+        <div class="cart-items-col" id="cart-items">
+          ${cart.map(item => `
+            <div class="cart-item" id="item-${item.id}">
+              <div class="cart-item-img">
+                <a href="producto.html?id=${item.productId}">
+                  <img src="${item.image}" alt="${item.name}">
+                </a>
+              </div>
+              <div class="cart-item-info" data-price="${formatPrice(item.price * item.quantity)}">
+                <span class="cart-item-brand">${item.brand}</span>
+                <span class="cart-item-name">${item.name}</span>
+                <span class="cart-item-size">Talla: <span>EU ${item.size}</span></span>
+                <div class="cart-item-controls">
+                  <div class="cart-qty">
+                    <button class="cart-qty-btn" onclick="handleQtyChange(${item.id}, ${item.quantity - 1})">−</button>
+                    <span class="cart-qty-num">${item.quantity}</span>
+                    <button class="cart-qty-btn" onclick="handleQtyChange(${item.id}, ${item.quantity + 1})">+</button>
+                  </div>
+                  <span class="cart-item-subtotal">Subtotal: <strong>${formatPrice(item.price * item.quantity)}</strong></span>
+                </div>
+              </div>
+              <div class="cart-item-right">
+                <span class="cart-item-price">${formatPrice(item.price)}</span>
+                <button class="cart-item-remove" onclick="handleRemove(${item.id})">✕ Eliminar</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <aside class="cart-summary">
+          <h3>RESUMEN</h3>
+
+          <div class="summary-row">
+            <span class="label">Subtotal</span>
+            <span class="value">${formatPrice(totals.subtotal)}</span>
+          </div>
+
+          ${discount ? `
+            <div class="summary-row">
+              <span class="label">Descuento (${discount.code})</span>
+              <span class="value summary-discount">−${formatPrice(totals.discountAmount)}</span>
+            </div>
+          ` : ''}
+
+          <div class="summary-row">
+            <span class="label">Envío</span>
+            <span class="value ${totals.shipping === 0 ? 'summary-shipping-free' : ''}">${totals.shipping === 0 ? 'GRATIS' : formatPrice(totals.shipping)}</span>
+          </div>
+
+          ${totals.shipping > 0 ? `<p class="summary-shipping-note">Faltan <strong>${formatPrice(200000 - (totals.subtotal - totals.discountAmount))}</strong> para envío gratis</p>` : ''}
+
+          <div class="summary-row summary-total">
+            <span class="label">TOTAL</span>
+            <span class="value">${formatPrice(totals.total)}</span>
+          </div>
+
+          <!-- Discount code -->
+          <div class="discount-section">
+            ${discount ? `
+              <div class="applied-discount">
+                <span>🏷 ${discount.code} — ${discount.rate * 100}% off</span>
+                <button class="remove-discount" onclick="handleRemoveDiscount()">✕</button>
+              </div>
+            ` : `
+              <div class="discount-form">
+                <input class="discount-input" type="text" id="discount-code" placeholder="CÓDIGO DESCUENTO">
+                <button class="discount-btn" onclick="handleApplyDiscount()">Aplicar</button>
+              </div>
+              <div class="discount-msg" id="discount-msg"></div>
+            `}
+          </div>
+
+          <div class="cart-actions">
+            <a href="checkout.html" class="btn-checkout">PROCEDER AL CHECKOUT →</a>
+            <a href="catalogo.html" class="btn-continue">← Continuar comprando</a>
+          </div>
+        </aside>
+      </div>
+    `;
+  }
+
+  function handleQtyChange(itemId, newQty) {
+    updateQuantity(itemId, newQty);
+    renderCart();
+  }
+
+  function handleRemove(itemId) {
+    const el = document.getElementById('item-' + itemId);
+    if (el) {
+      el.classList.add('removing');
+      setTimeout(() => {
+        removeFromCart(itemId);
+        renderCart();
+      }, 300);
+    }
+  }
+
+  function handleApplyDiscount() {
+    const code = document.getElementById('discount-code')?.value || '';
+    const result = applyDiscount(code);
+    const msg = document.getElementById('discount-msg');
+    if (msg) {
+      msg.textContent = result.message;
+      msg.className = 'discount-msg ' + (result.success ? 'success' : 'error');
+    }
+    if (result.success) {
+      setTimeout(renderCart, 600);
+    }
+  }
+
+  function handleRemoveDiscount() {
+    removeDiscount();
+    renderCart();
+  }
+
+  document.addEventListener('DOMContentLoaded', renderCart);
+</script>
+</body>
+</html>
