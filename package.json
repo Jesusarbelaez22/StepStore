@@ -6,12 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "tunnel": "node tunnel.js",
-    "favicon": "node generate-favicon.js"
+    "tunnel": "node tunnel.js"
   },
   "dependencies": {
     "@ngrok/ngrok": "^1.7.0",
-    "canvas": "^2.11.2",
     "dotenv": "^17.4.2",
     "express": "^4.22.2"
   },
