@@ -1,4 +1,48 @@
+// =============================================================
+//  CÓMO AGREGAR UN PRODUCTO NUEVO — GUÍA PASO A PASO
+// =============================================================
+//
+//  1. PREPARA TUS FOTOS
+//     - Guarda las imágenes en:  C:\StepStore\img\productos\
+//     - Nombres recomendados:    nike-air-max-1.jpg, nike-air-max-2.jpg ...
+//     - Tamaño ideal:            600×600 px, formato JPG o WebP
+//     - Mínimo 1 foto, máximo 4 (la primera es la principal)
+//
+//  2. COPIA ESTA PLANTILLA y pégala ANTES del corchete final "];":
+//
+//  {
+//    id: 22,                          // Número único, nunca repetir
+//    name: "Nombre del zapato",
+//    brand: "Marca",
+//    category: "sneakers",            // sneakers | basketball | running | casual | skate
+//    price: 350000,                   // Precio en pesos colombianos
+//    originalPrice: 420000,           // Tacha el precio original. Borra la línea si no hay descuento
+//    sizes: [38, 39, 40, 41, 42],     // Tallas disponibles
+//    images: [
+//      "img/productos/mi-zapato-1.jpg",
+//      "img/productos/mi-zapato-2.jpg"
+//    ],
+//    rating: 4.5,                     // Calificación del 1 al 5
+//    reviews: 10,                     // Número de reseñas
+//    badge: "NEW",                    // "NEW" | "HOT" | null (sin badge)
+//    description: "Descripción del producto.",
+//    isNew: true,                     // true → aparece en sección "Nuevos"
+//    isTrending: false                // true → aparece en sección "Tendencias"
+//  },
+//
+//  3. CAMBIA el id, nombre, fotos y precio. Guarda el archivo.
+//  4. Sube los cambios: git add . → git commit → git push
+//  5. Vercel redeploya automáticamente en ~1 minuto.
+//
+// =============================================================
+
 const PRODUCTS = [
+
+  // -----------------------------------------------------------
+  //  PRODUCTOS DE EJEMPLO (usan imágenes de internet)
+  //  Puedes editarlos o borrarlos cuando tengas tus fotos reales
+  // -----------------------------------------------------------
+
   {
     id: 1,
     name: "Air Max Pulse",
@@ -65,380 +109,110 @@ const PRODUCTS = [
     isNew: false,
     isTrending: true
   },
+
+  // -----------------------------------------------------------
+  //  MIS PRODUCTOS REALES — reemplaza con tus fotos y datos
+  //  Pon las fotos en: C:\StepStore\img\productos\
+  // -----------------------------------------------------------
+
   {
-    id: 4,
-    name: "990v6",
-    brand: "New Balance",
-    category: "casual",
-    price: 520000,
-    originalPrice: 580000,
-    sizes: [38, 39, 40, 41, 42, 43, 44, 45],
+    id: 21,
+    name: "Mi Producto 1",
+    brand: "Marca",
+    category: "sneakers",            // sneakers | basketball | running | casual | skate
+    price: 300000,
+    originalPrice: null,             // Borra esta línea si no hay precio original
+    sizes: [38, 39, 40, 41, 42],
     images: [
-      "https://picsum.photos/seed/shoe4a/600/600",
-      "https://picsum.photos/seed/shoe4b/600/600",
-      "https://picsum.photos/seed/shoe4c/600/600",
-      "https://picsum.photos/seed/shoe4d/600/600"
+      "img/productos/producto-21-1.jpg",
+      "img/productos/producto-21-2.jpg"
     ],
-    rating: 4.7,
-    reviews: 89,
-    badge: "NEW",
-    description: "Made in USA. El 990v6 continúa la tradición de excelencia con ENCAP y ABZORB para máxima comodidad todo el día.",
-    specs: { material: "Mesh + cuero genuino", suela: "ENCAP + ABZORB", peso: "340g (talla 42)", origen: "USA" },
+    rating: 5.0,
+    reviews: 1,
+    badge: "NEW",                    // "NEW" | "HOT" | null
+    description: "Descripción de mi producto.",
     isNew: true,
     isTrending: false
   },
   {
-    id: 5,
-    name: "Old Skool Pro",
-    brand: "Vans",
-    category: "skate",
-    price: 180000,
-    originalPrice: null,
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44],
-    images: [
-      "https://picsum.photos/seed/shoe5a/600/600",
-      "https://picsum.photos/seed/shoe5b/600/600",
-      "https://picsum.photos/seed/shoe5c/600/600",
-      "https://picsum.photos/seed/shoe5d/600/600"
-    ],
-    rating: 4.4,
-    reviews: 341,
-    badge: null,
-    description: "La silueta icónica del skate con refuerzo de ante en la tira lateral y suela de goma vulcanizada para grip perfecto.",
-    specs: { material: "Canvas + suede", suela: "Goma vulcanizada", peso: "280g (talla 42)", origen: "China" },
-    isNew: false,
-    isTrending: false
-  },
-  {
-    id: 6,
-    name: "Chuck 70 Hi",
-    brand: "Converse",
+    id: 22,
+    name: "Mi Producto 2",
+    brand: "Marca",
     category: "casual",
-    price: 220000,
-    originalPrice: 260000,
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
+    price: 250000,
+    originalPrice: 300000,
+    sizes: [38, 39, 40, 41, 42, 43],
     images: [
-      "https://picsum.photos/seed/shoe6a/600/600",
-      "https://picsum.photos/seed/shoe6b/600/600",
-      "https://picsum.photos/seed/shoe6c/600/600",
-      "https://picsum.photos/seed/shoe6d/600/600"
+      "img/productos/producto-22-1.jpg",
+      "img/productos/producto-22-2.jpg"
     ],
-    rating: 4.3,
-    reviews: 198,
+    rating: 5.0,
+    reviews: 1,
     badge: null,
-    description: "El Chuck 70 eleva el clásico original con materiales premium, forro interior más suave y acabados de mayor calidad.",
-    specs: { material: "Canvas 100% algodón", suela: "Caucho natural", peso: "260g (talla 42)", origen: "Vietnam" },
-    isNew: false,
-    isTrending: false
-  },
-  {
-    id: 7,
-    name: "Dunk Low Retro",
-    brand: "Nike",
-    category: "sneakers",
-    price: 380000,
-    originalPrice: null,
-    sizes: [38, 39, 40, 41, 42, 43, 44],
-    images: [
-      "https://picsum.photos/seed/shoe7a/600/600",
-      "https://picsum.photos/seed/shoe7b/600/600",
-      "https://picsum.photos/seed/shoe7c/600/600",
-      "https://picsum.photos/seed/shoe7d/600/600"
-    ],
-    rating: 4.6,
-    reviews: 445,
-    badge: "HOT",
-    description: "De la cancha a la calle. El Dunk Low Retro trae de vuelta el diseño legendario con cuero suave y los colores más buscados de la temporada.",
-    specs: { material: "Cuero + textil", suela: "Caucho con pivot circle", peso: "300g (talla 42)", origen: "Vietnam" },
+    description: "Descripción de mi producto.",
     isNew: false,
     isTrending: true
   },
   {
-    id: 8,
-    name: "Forum Low",
-    brand: "Adidas",
-    category: "basketball",
-    price: 290000,
-    originalPrice: 340000,
-    sizes: [39, 40, 41, 42, 43, 44],
-    images: [
-      "https://picsum.photos/seed/shoe8a/600/600",
-      "https://picsum.photos/seed/shoe8b/600/600",
-      "https://picsum.photos/seed/shoe8c/600/600",
-      "https://picsum.photos/seed/shoe8d/600/600"
-    ],
-    rating: 4.2,
-    reviews: 167,
-    badge: null,
-    description: "Regresa el Forum Low con su icónica correa transversal y construcción de cuero premium. Un clásico de los 80s reinventado.",
-    specs: { material: "Cuero sintético", suela: "Herringbone rubber", peso: "380g (talla 42)", origen: "Indonesia" },
-    isNew: false,
-    isTrending: false
-  },
-  {
-    id: 9,
-    name: "Air Force 1 '07",
-    brand: "Nike",
-    category: "sneakers",
-    price: 280000,
-    originalPrice: null,
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
-    images: [
-      "https://picsum.photos/seed/shoe9a/600/600",
-      "https://picsum.photos/seed/shoe9b/600/600",
-      "https://picsum.photos/seed/shoe9c/600/600",
-      "https://picsum.photos/seed/shoe9d/600/600"
-    ],
-    rating: 4.7,
-    reviews: 892,
-    badge: null,
-    description: "El AF1 original. Cuero de primera calidad, perforaciones para transpirabilidad y la unit Air que lo hace inconfundible desde 1982.",
-    specs: { material: "Cuero full-grain", suela: "Caucho con Air-Sole", peso: "415g (talla 42)", origen: "China" },
-    isNew: false,
-    isTrending: false
-  },
-  {
-    id: 10,
-    name: "Gel-Kayano 30",
-    brand: "New Balance",
-    category: "running",
-    price: 420000,
-    originalPrice: 490000,
-    sizes: [38, 39, 40, 41, 42, 43, 44, 45],
-    images: [
-      "https://picsum.photos/seed/shoe10a/600/600",
-      "https://picsum.photos/seed/shoe10b/600/600",
-      "https://picsum.photos/seed/shoe10c/600/600",
-      "https://picsum.photos/seed/shoe10d/600/600"
-    ],
-    rating: 4.6,
-    reviews: 134,
-    badge: "NEW",
-    description: "30 años de innovación en running. Gel-Kayano 30 con tecnología FF BLAST+ para amortiguación óptima en largas distancias.",
-    specs: { material: "Mesh técnico", suela: "GEL + FF BLAST+", peso: "310g (talla 42)", origen: "Vietnam" },
-    isNew: true,
-    isTrending: false
-  },
-  {
-    id: 11,
-    name: "Sk8-Hi Platform",
-    brand: "Vans",
-    category: "skate",
-    price: 210000,
-    originalPrice: null,
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43],
-    images: [
-      "https://picsum.photos/seed/shoe11a/600/600",
-      "https://picsum.photos/seed/shoe11b/600/600",
-      "https://picsum.photos/seed/shoe11c/600/600",
-      "https://picsum.photos/seed/shoe11d/600/600"
-    ],
-    rating: 4.3,
-    reviews: 78,
-    badge: null,
-    description: "El Sk8-Hi elevado con plataforma de 4cm. Mismo ADN skate con altura extra para un look más atrevido y urbano.",
-    specs: { material: "Canvas + suede", suela: "Goma vulcanizada con plataforma", peso: "360g (talla 40)", origen: "China" },
-    isNew: false,
-    isTrending: false
-  },
-  {
-    id: 12,
-    name: "NMD_R1 V3",
-    brand: "Adidas",
-    category: "sneakers",
-    price: 360000,
-    originalPrice: 410000,
-    sizes: [39, 40, 41, 42, 43, 44, 45],
-    images: [
-      "https://picsum.photos/seed/shoe12a/600/600",
-      "https://picsum.photos/seed/shoe12b/600/600",
-      "https://picsum.photos/seed/shoe12c/600/600",
-      "https://picsum.photos/seed/shoe12d/600/600"
-    ],
-    rating: 4.4,
-    reviews: 203,
-    badge: null,
-    description: "El NMD evoluciona. Upper Primeknit de nueva generación con plugs de color contrastante y amortiguación Boost completa.",
-    specs: { material: "Primeknit 360", suela: "Boost completo", peso: "265g (talla 42)", origen: "China" },
-    isNew: false,
-    isTrending: false
-  },
-  {
-    id: 13,
-    name: "Jordan 4 Retro",
-    brand: "Jordan",
-    category: "basketball",
-    price: 620000,
-    originalPrice: null,
-    sizes: [40, 41, 42, 43, 44, 45],
-    images: [
-      "https://picsum.photos/seed/shoe13a/600/600",
-      "https://picsum.photos/seed/shoe13b/600/600",
-      "https://picsum.photos/seed/shoe13c/600/600",
-      "https://picsum.photos/seed/shoe13d/600/600"
-    ],
-    rating: 4.9,
-    reviews: 389,
-    badge: "HOT",
-    description: "Diseñado por Tinker Hatfield, el Jordan 4 con sus icónicas mallas laterales y unidad Air visible es un must-have absoluto.",
-    specs: { material: "Cuero + mesh", suela: "Caucho con Air-Sole visible", peso: "450g (talla 42)", origen: "China" },
-    isNew: false,
-    isTrending: true
-  },
-  {
-    id: 14,
-    name: "Fresh Foam X 1080v13",
-    brand: "New Balance",
-    category: "running",
-    price: 540000,
-    originalPrice: null,
-    sizes: [38, 39, 40, 41, 42, 43, 44, 45],
-    images: [
-      "https://picsum.photos/seed/shoe14a/600/600",
-      "https://picsum.photos/seed/shoe14b/600/600",
-      "https://picsum.photos/seed/shoe14c/600/600",
-      "https://picsum.photos/seed/shoe14d/600/600"
-    ],
-    rating: 4.7,
-    reviews: 112,
-    badge: "NEW",
-    description: "La zapatilla de running más lujosa de New Balance. Fresh Foam X de nueva generación para la mayor amortiguación jamás lograda.",
-    specs: { material: "Hypoknit", suela: "Fresh Foam X", peso: "298g (talla 42)", origen: "China" },
-    isNew: true,
-    isTrending: false
-  },
-  {
-    id: 15,
-    name: "Authentic Classic",
-    brand: "Vans",
-    category: "casual",
-    price: 120000,
-    originalPrice: 150000,
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
-    images: [
-      "https://picsum.photos/seed/shoe15a/600/600",
-      "https://picsum.photos/seed/shoe15b/600/600",
-      "https://picsum.photos/seed/shoe15c/600/600",
-      "https://picsum.photos/seed/shoe15d/600/600"
-    ],
-    rating: 4.2,
-    reviews: 567,
-    badge: null,
-    description: "El inicio de todo. El Authentic es el modelo original de Vans desde 1966. Simple, limpio, eterno.",
-    specs: { material: "Canvas", suela: "Goma vulcanizada", peso: "240g (talla 42)", origen: "China" },
-    isNew: false,
-    isTrending: false
-  },
-  {
-    id: 16,
-    name: "Run Star Hike",
-    brand: "Converse",
-    category: "skate",
-    price: 310000,
-    originalPrice: 360000,
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44],
-    images: [
-      "https://picsum.photos/seed/shoe16a/600/600",
-      "https://picsum.photos/seed/shoe16b/600/600",
-      "https://picsum.photos/seed/shoe16c/600/600",
-      "https://picsum.photos/seed/shoe16d/600/600"
-    ],
-    rating: 4.1,
-    reviews: 94,
-    badge: null,
-    description: "Converse se reinventa. Run Star Hike con la icónica estrella Chuck y suela chunky de trail para las calles más exigentes.",
-    specs: { material: "Canvas premium", suela: "CX foam + rubber lug", peso: "480g (talla 42)", origen: "Vietnam" },
-    isNew: false,
-    isTrending: false
-  },
-  {
-    id: 17,
-    name: "React Infinity Run 4",
-    brand: "Nike",
+    id: 23,
+    name: "Mi Producto 3",
+    brand: "Marca",
     category: "running",
     price: 400000,
     originalPrice: null,
-    sizes: [38, 39, 40, 41, 42, 43, 44, 45],
+    sizes: [39, 40, 41, 42, 43, 44],
     images: [
-      "https://picsum.photos/seed/shoe17a/600/600",
-      "https://picsum.photos/seed/shoe17b/600/600",
-      "https://picsum.photos/seed/shoe17c/600/600",
-      "https://picsum.photos/seed/shoe17d/600/600"
+      "img/productos/producto-23-1.jpg",
+      "img/productos/producto-23-2.jpg"
     ],
-    rating: 4.5,
-    reviews: 178,
-    badge: "NEW",
-    description: "Diseñado para reducir lesiones. La espuma React de Nike en máxima expresión con upper Flyknit para carreras largas sin dolor.",
-    specs: { material: "Flyknit", suela: "React foam", peso: "305g (talla 42)", origen: "Vietnam" },
+    rating: 5.0,
+    reviews: 1,
+    badge: "HOT",
+    description: "Descripción de mi producto.",
+    isNew: false,
+    isTrending: false
+  },
+  {
+    id: 24,
+    name: "Mi Producto 4",
+    brand: "Marca",
+    category: "skate",
+    price: 200000,
+    originalPrice: null,
+    sizes: [37, 38, 39, 40, 41, 42],
+    images: [
+      "img/productos/producto-24-1.jpg",
+      "img/productos/producto-24-2.jpg"
+    ],
+    rating: 5.0,
+    reviews: 1,
+    badge: null,
+    description: "Descripción de mi producto.",
     isNew: true,
     isTrending: false
   },
   {
-    id: 18,
-    name: "Handball Spezial",
-    brand: "Adidas",
-    category: "casual",
-    price: 260000,
-    originalPrice: null,
-    sizes: [39, 40, 41, 42, 43, 44, 45],
-    images: [
-      "https://picsum.photos/seed/shoe18a/600/600",
-      "https://picsum.photos/seed/shoe18b/600/600",
-      "https://picsum.photos/seed/shoe18c/600/600",
-      "https://picsum.photos/seed/shoe18d/600/600"
-    ],
-    rating: 4.6,
-    reviews: 321,
-    badge: "HOT",
-    description: "El favorito de los creativos y fashionistas. Handball Spezial con piel de ante suave y silueta baja que combina con todo.",
-    specs: { material: "Suede premium", suela: "Gum rubber", peso: "290g (talla 42)", origen: "China" },
-    isNew: false,
-    isTrending: true
-  },
-  {
-    id: 19,
-    name: "Jordan 11 Retro",
-    brand: "Jordan",
+    id: 25,
+    name: "Mi Producto 5",
+    brand: "Marca",
     category: "basketball",
-    price: 580000,
-    originalPrice: null,
+    price: 500000,
+    originalPrice: 580000,
     sizes: [40, 41, 42, 43, 44, 45],
     images: [
-      "https://picsum.photos/seed/shoe19a/600/600",
-      "https://picsum.photos/seed/shoe19b/600/600",
-      "https://picsum.photos/seed/shoe19c/600/600",
-      "https://picsum.photos/seed/shoe19d/600/600"
+      "img/productos/producto-25-1.jpg",
+      "img/productos/producto-25-2.jpg"
     ],
-    rating: 4.8,
-    reviews: 467,
-    badge: "HOT",
-    description: "La zapatilla de Michael Jordan en sus años más legendarios. Patente brillante, Ballistic mesh y la suela de carbono icónica.",
-    specs: { material: "Patente + Ballistic mesh", suela: "Carbon fiber shank + Air", peso: "430g (talla 42)", origen: "China" },
-    isNew: false,
+    rating: 5.0,
+    reviews: 1,
+    badge: "NEW",
+    description: "Descripción de mi producto.",
+    isNew: true,
     isTrending: true
-  },
-  {
-    id: 20,
-    name: "Blazer Mid '77 Vintage",
-    brand: "Nike",
-    category: "sneakers",
-    price: 230000,
-    originalPrice: 270000,
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
-    images: [
-      "https://picsum.photos/seed/shoe20a/600/600",
-      "https://picsum.photos/seed/shoe20b/600/600",
-      "https://picsum.photos/seed/shoe20c/600/600",
-      "https://picsum.photos/seed/shoe20d/600/600"
-    ],
-    rating: 4.4,
-    reviews: 289,
-    badge: null,
-    description: "El primer Nike de baloncesto regresa con acabado vintage intencionado. Cuero suave y la paleta de colores clásica de los 70s.",
-    specs: { material: "Cuero + textil", suela: "Caucho vulcanizado", peso: "355g (talla 42)", origen: "Vietnam" },
-    isNew: false,
-    isTrending: false
   }
+
+  // Agrega más productos aquí siguiendo la guía del inicio del archivo
+
 ];
 
 function getProductById(id) {
