@@ -65,6 +65,15 @@
   </div>
 </div>
 
+<!-- SIZE TIP BAR -->
+<div class="size-tip-bar">
+  <div class="container">
+    <i data-lucide="ruler"></i>
+    <span>Nuestros productos usan tallaje EUR</span>
+    <a href="tallas.html">¿No sabes tu talla? Ver guía <i data-lucide="arrow-right"></i></a>
+  </div>
+</div>
+
 <!-- PRODUCT LAYOUT -->
 <div class="container">
   <div class="product-layout" id="product-layout">
@@ -99,6 +108,12 @@
 
 <footer class="footer">
   <div class="container">
+    <nav class="footer-mini-nav">
+      <a href="catalogo.html">Catálogo</a>
+      <a href="tallas.html">Guía de tallas</a>
+      <a href="#">Envíos y devoluciones</a>
+      <a href="#">Contacto</a>
+    </nav>
     <div class="footer-bottom">
       <p>© 2026 StepStore. Todos los derechos reservados.</p>
       <div class="payment-methods"><span>PSE</span><span>Visa</span><span>MC</span><span>Nequi</span></div>
@@ -228,7 +243,7 @@
         <div>
           <div class="selector-label">
             <span>Talla ${selectedSize ? `— EU ${selectedSize}` : ''}</span>
-            <button class="size-guide-link" onclick="showSizeGuide()">Guía de tallas</button>
+            <a href="tallas.html" class="size-guide-link" target="_blank">¿No sabes tu talla? Ver guía <i data-lucide="arrow-right"></i></a>
           </div>
           <div class="size-grid-product" id="size-grid">
             ${product.sizes.map(s => `

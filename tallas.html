@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Tallas — StepStore</title>
+  <link rel="icon" type="image/svg+xml" href="img/icons/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/favicon-180x180.png">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .tallas-page { padding-top: 70px; min-height: 100vh; }
+
+    /* ── Hero ── */
+    .tallas-hero {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 0 50px;
+      text-align: center;
+    }
+    .tallas-hero .breadcrumb {
+      display: flex; gap: 8px; font-size: 0.85rem;
+      color: var(--text-secondary); justify-content: center;
+      margin-bottom: 24px;
+    }
+    .tallas-hero .breadcrumb a { color: var(--text-secondary); transition: color var(--transition); }
+    .tallas-hero .breadcrumb a:hover { color: var(--neon); }
+    .tallas-hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); margin-bottom: 14px; line-height: 1.1; }
+    .tallas-hero p { color: var(--text-secondary); font-size: 1.05rem; max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+    /* ── Steps ── */
+    .steps-section { padding: 70px 0; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+    }
+    @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; max-width: 500px; margin-left: auto; margin-right: auto; } }
+
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 28px 28px;
+      text-align: center;
+      position: relative;
+      transition: var(--transition);
+    }
+    .step-card:hover { border-color: var(--neon); box-shadow: 0 0 24px rgba(57,255,20,0.08); transform: translateY(-4px); }
+
+    .step-number {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--neon); color: #000;
+      font-family: 'Bebas Neue', cursive; font-size: 1rem; letter-spacing: 1px;
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-icon {
+      width: 60px; height: 60px;
+      background: rgba(57,255,20,0.1);
+      border: 1px solid rgba(57,255,20,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .step-icon svg[data-lucide] { width: 26px; height: 26px; stroke: var(--neon); }
+    .step-card h3 { font-size: 1.05rem; margin-bottom: 18px; line-height: 1.4; }
+    .step-card ul { list-style: none; padding: 0; text-align: left; }
+    .step-card ul li {
+      color: var(--text-secondary); font-size: 0.88rem; padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 10px; align-items: flex-start; line-height: 1.5;
+    }
+    .step-card ul li:last-child { border-bottom: none; }
+    .step-card ul li::before {
+      content: ''; width: 5px; height: 5px; background: var(--neon);
+      border-radius: 50%; margin-top: 8px; flex-shrink: 0;
+    }
+
+    /* ── Tables ── */
+    .tables-section { padding: 0 0 70px; }
+
+    .tab-nav {
+      display: flex; gap: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 6px; width: fit-content;
+      margin: 0 auto 40px;
+    }
+    .size-tab-btn {
+      padding: 10px 40px; border-radius: 8px;
+      font-weight: 700; font-size: 0.88rem;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text-secondary); transition: var(--transition);
+    }
+    .size-tab-btn.active { background: var(--neon); color: #000; }
+    .size-tab-btn:hover:not(.active) { color: var(--neon); }
+
+    .size-table-wrap { display: none; overflow-x: auto; border-radius: var(--radius); }
+    .size-table-wrap.active { display: block; }
+
+    .size-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      min-width: 480px;
+    }
+    .size-table thead tr { background: var(--bg-secondary); border-bottom: 2px solid var(--neon); }
+    .size-table th {
+      padding: 16px 20px; text-align: center;
+      font-family: 'Bebas Neue', cursive; font-size: 1rem;
+      letter-spacing: 1px; color: var(--text-secondary);
+    }
+    .size-table th.col-eur { color: var(--neon); }
+    .size-table td {
+      padding: 15px 20px; text-align: center;
+      font-size: 0.95rem; border-bottom: 1px solid var(--border);
+    }
+    .size-table tr:last-child td { border-bottom: none; }
+    .size-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+    .size-table tbody tr:hover { background: rgba(57,255,20,0.06); }
+    .size-table td.eur-col { color: var(--neon); font-weight: 700; }
+
+    /* ── Note ── */
+    .note-section { padding: 0 0 60px; }
+    .note-box {
+      background: var(--bg-card);
+      border: 1.5px solid var(--neon);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      box-shadow: 0 0 20px rgba(57,255,20,0.12);
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .note-box svg[data-lucide] { width: 22px; height: 22px; stroke: var(--neon); flex-shrink: 0; margin-top: 2px; }
+    .note-box p { color: var(--text-secondary); line-height: 1.75; font-size: 0.95rem; margin: 0; }
+    .note-box strong { color: var(--text-primary); }
+
+    /* ── How To ── */
+    .howto-section { padding: 0 0 80px; }
+    .howto-list {
+      display: flex; flex-direction: column; gap: 14px;
+      max-width: 680px; margin: 36px auto 0;
+    }
+    .howto-item {
+      display: flex; gap: 20px; align-items: center;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 24px;
+      transition: var(--transition);
+    }
+    .howto-item:hover { border-color: var(--neon); background: rgba(57,255,20,0.04); }
+    .howto-num {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 2.2rem; color: var(--neon);
+      line-height: 1; flex-shrink: 0; min-width: 36px;
+    }
+    .howto-item p { color: var(--text-secondary); font-size: 0.92rem; margin: 0; line-height: 1.6; }
+    .howto-item p strong { color: var(--text-primary); }
+
+    /* ── WhatsApp CTA ── */
+    .whatsapp-float {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #25D366; color: #fff;
+      border-radius: 50px; padding: 14px 22px;
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 600; font-size: 0.88rem;
+      z-index: 900;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.45);
+      text-decoration: none;
+      transition: background 0.25s, transform 0.25s;
+      animation: waPulse 2.5s ease-in-out infinite;
+      white-space: nowrap;
+    }
+    .whatsapp-float:hover { background: #1da851; transform: translateY(-3px); animation: none; }
+    .whatsapp-float img { display: block; flex-shrink: 0; }
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 24px rgba(37,211,102,0.45); }
+      50%       { box-shadow: 0 4px 48px rgba(37,211,102,0.8); }
+    }
+    @media (max-width: 560px) {
+      .whatsapp-float span { display: none; }
+      .whatsapp-float { padding: 14px; border-radius: 50%; }
+    }
+  </style>
+</head>
+<body class="tallas-page">
+
+<!-- NAVBAR -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="navbar-inner">
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="index.html" class="logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</a>
+    <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="catalogo.html?sort=newest">Novedades</a>
+      <a href="catalogo.html">Marcas</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-action-btn search-trigger" aria-label="Buscar"><i data-lucide="search" class="icon-lg"></i></button>
+      <a href="wishlist.html" class="nav-action-btn" aria-label="Favoritos">
+        <i data-lucide="heart" class="icon-lg"></i>
+        <span class="wishlist-badge" style="display:none">0</span>
+      </a>
+      <a href="carrito.html" class="nav-action-btn" aria-label="Carrito">
+        <i data-lucide="shopping-cart" class="icon-lg"></i>
+        <span class="cart-badge" style="display:none">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-overlay"></div>
+<div id="mobile-menu">
+  <div class="mobile-logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
+  <a href="index.html" class="mobile-nav-link">Inicio</a>
+  <a href="catalogo.html" class="mobile-nav-link">Catálogo</a>
+  <a href="catalogo.html?sort=newest" class="mobile-nav-link">Novedades</a>
+  <a href="wishlist.html" class="mobile-nav-link"><i data-lucide="heart"></i> Favoritos</a>
+  <a href="carrito.html" class="mobile-nav-link"><i data-lucide="shopping-cart"></i> Carrito</a>
+</div>
+
+<!-- Search Overlay -->
+<div id="search-overlay">
+  <div class="search-wrapper">
+    <input class="search-input" type="text" placeholder="Busca zapatillas, marcas..." autocomplete="off">
+    <button class="search-close" onclick="closeSearch()"><i data-lucide="x"></i></button>
+  </div>
+  <div id="search-results"></div>
+</div>
+
+<!-- HERO -->
+<div class="tallas-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a>
+      <span>›</span>
+      <span>Guía de Tallas</span>
+    </div>
+    <h1>¿CÓMO ENCUENTRO <span class="neon-text">MI TALLA</span> CORRECTA?</h1>
+    <p>En StepStore queremos que encuentres la talla perfecta para tus sneakers. Sigue estos simples pasos:</p>
+  </div>
+</div>
+
+<!-- PASOS -->
+<section class="steps-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>PASOS <span class="neon-text">PARA ENCONTRAR TU TALLA</span></h2>
+    </div>
+    <div class="steps-grid">
+
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-icon"><i data-lucide="tag"></i></div>
+        <h3>Verifica la etiqueta de un zapato que te quede cómodo</h3>
+        <ul>
+          <li>Busca la etiqueta dentro de tus zapatos</li>
+          <li>Identifica el tallaje en formato EUR o FR (tallaje europeo)</li>
+        </ul>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-icon"><i data-lucide="ruler"></i></div>
+        <h3>Mide tu pie en centímetros</h3>
+        <ul>
+          <li>Coloca tu pie sobre una hoja de papel y marca desde el talón hasta la punta de tu dedo más largo</li>
+          <li>Usa una regla para medir la distancia en centímetros</li>
+        </ul>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-icon"><i data-lucide="table-2"></i></div>
+        <h3>Consulta nuestra tabla comparativa</h3>
+        <ul>
+          <li>Encuentra en nuestra tabla la talla que corresponde a la medida de tu pie en centímetros</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="neon-divider"></div>
+
+<!-- TABLAS COMPARATIVAS -->
+<section class="tables-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>TABLAS <span class="neon-text">COMPARATIVAS</span></h2>
+      <p>La columna <span class="neon-text">EUR</span> es la talla marcada en nuestros productos</p>
+    </div>
+
+    <div class="tab-nav">
+      <button class="size-tab-btn active" data-tab="hombres" onclick="switchTab('hombres')">Hombres</button>
+      <button class="size-tab-btn" data-tab="mujeres" onclick="switchTab('mujeres')">Mujeres</button>
+    </div>
+
+    <!-- Hombres -->
+    <div class="size-table-wrap active" id="tab-hombres">
+      <table class="size-table">
+        <thead>
+          <tr>
+            <th>Talla COL</th>
+            <th>Talla US</th>
+            <th class="col-eur">Talla EUR ★</th>
+            <th>Medida (CM)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>38 COL</td><td>7.0 US</td><td class="eur-col">40 EUR</td><td>25 CM</td></tr>
+          <tr><td>39 COL</td><td>8.0 US</td><td class="eur-col">41 EUR</td><td>26 CM</td></tr>
+          <tr><td>40 COL</td><td>8.5 US</td><td class="eur-col">42 EUR</td><td>26.5 CM</td></tr>
+          <tr><td>41 COL</td><td>9.5 US</td><td class="eur-col">43 EUR</td><td>27 CM</td></tr>
+          <tr><td>42 COL</td><td>10.0 US</td><td class="eur-col">44 EUR</td><td>28 CM</td></tr>
+          <tr><td>43 COL</td><td>10.5 US</td><td class="eur-col">45 EUR</td><td>28.5 CM</td></tr>
+          <tr><td>44 COL</td><td>11.0 US</td><td class="eur-col">46 EUR</td><td>29 CM</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mujeres -->
+    <div class="size-table-wrap" id="tab-mujeres">
+      <table class="size-table">
+        <thead>
+          <tr>
+            <th>Talla COL</th>
+            <th>Talla US</th>
+            <th class="col-eur">Talla EUR ★</th>
+            <th>Medida (CM)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>35 COL</td><td>5.5 US</td><td class="eur-col">36 EUR</td><td>22.5 CM</td></tr>
+          <tr><td>36 COL</td><td>6.0 US</td><td class="eur-col">37 EUR</td><td>23 CM</td></tr>
+          <tr><td>37 COL</td><td>7.0 US</td><td class="eur-col">38 EUR</td><td>24 CM</td></tr>
+          <tr><td>38 COL</td><td>7.5 US</td><td class="eur-col">39 EUR</td><td>25 CM</td></tr>
+          <tr><td>39 COL</td><td>8.0 US</td><td class="eur-col">40 EUR</td><td>25.5 CM</td></tr>
+          <tr><td>40 COL</td><td>8.5 US</td><td class="eur-col">41 EUR</td><td>26 CM</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- NOTA IMPORTANTE -->
+<section class="note-section">
+  <div class="container">
+    <div class="note-box">
+      <i data-lucide="info"></i>
+      <p>
+        <strong>Nota importante:</strong> Todos nuestros productos son importados, por lo que los tallajes vienen marcados en el sistema <strong class="neon-text">EUR</strong>. Si sigues estos pasos, ¡aseguramos que encuentres la talla ideal para ti!
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ¿CÓMO USAR LA TABLA? -->
+<section class="howto-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>¿CÓMO USAR <span class="neon-text">LA TABLA?</span></h2>
+    </div>
+    <div class="howto-list">
+      <div class="howto-item">
+        <span class="howto-num">1</span>
+        <p><strong>Identifica la talla COL</strong> que sueles usar</p>
+      </div>
+      <div class="howto-item">
+        <span class="howto-num">2</span>
+        <p><strong>Verifica si coincide</strong> con la talla US o EUR de otros zapatos que tengas</p>
+      </div>
+      <div class="howto-item">
+        <span class="howto-num">3</span>
+        <p>Si tienes dudas, <strong>mide tu pie en centímetros (CM)</strong> y encuentra la talla que mejor se ajuste a ti</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
+        <p>Las mejores zapatillas streetwear en un solo lugar. Calidad premium, estilo sin límites, entrega en toda Colombia.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link">
+            <img src="https://cdn.simpleicons.org/instagram/39FF14" alt="Instagram" width="20" height="20">
+          </a>
+          <a href="#" class="social-link">
+            <img src="https://cdn.simpleicons.org/tiktok/39FF14" alt="TikTok" width="20" height="20">
+          </a>
+          <a href="#" class="social-link">
+            <img src="https://cdn.simpleicons.org/whatsapp/39FF14" alt="WhatsApp" width="20" height="20">
+          </a>
+          <a href="#" class="social-link">
+            <img src="https://cdn.simpleicons.org/facebook/39FF14" alt="Facebook" width="20" height="20">
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="catalogo.html?sort=newest">Novedades</a></li>
+          <li><a href="catalogo.html?badge=hot">Más vendidos</a></li>
+          <li><a href="catalogo.html?pmax=200000">Ofertas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Envíos y devoluciones</a></li>
+          <li><a href="tallas.html" style="color:var(--neon)">Guía de tallas</a></li>
+          <li><a href="#">Preguntas frecuentes</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-newsletter">
+        <h4>Newsletter</h4>
+        <p>Recibe drops exclusivos y descuentos antes que nadie.</p>
+        <div class="newsletter-form">
+          <input class="newsletter-input" type="email" placeholder="tu@email.com">
+          <button class="newsletter-btn" onclick="handleNewsletter()"><i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 StepStore. Todos los derechos reservados.</p>
+      <div class="payment-methods">
+        <span>PSE</span><span>Visa</span><span>MC</span><span>Nequi</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp flotante -->
+<a href="https://wa.me/573001234567" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+  <img src="https://cdn.simpleicons.org/whatsapp/ffffff" width="24" height="24" alt="WhatsApp">
+  <span>¿Dudas con tu talla? Escríbenos</span>
+</a>
+
+<button id="scroll-top" aria-label="Volver arriba"><i data-lucide="arrow-up"></i></button>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/search.js"></script>
+<script src="js/ui.js"></script>
+<script>lucide.createIcons();</script>
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.size-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.size-table-wrap').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  }
+
+  function handleNewsletter() {
+    const input = document.querySelector('.newsletter-input');
+    if (input.value && input.value.includes('@')) {
+      showToast('¡Suscrito exitosamente!', 'success');
+      input.value = '';
+    } else {
+      showToast('Por favor ingresa un email válido', 'error');
+    }
+  }
+</script>
+</body>
+</html>
