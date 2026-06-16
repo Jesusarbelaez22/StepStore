@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/carrito.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="cart-page">
 
@@ -26,9 +27,9 @@
       <a href="catalogo.html">Marcas</a>
     </div>
     <div class="nav-actions">
-      <button class="nav-action-btn search-trigger">🔍</button>
-      <a href="wishlist.html" class="nav-action-btn">❤️<span class="wishlist-badge" style="display:none">0</span></a>
-      <a href="carrito.html" class="nav-action-btn">🛒<span class="cart-badge" style="display:none">0</span></a>
+      <button class="nav-action-btn search-trigger"><i data-lucide="search" class="icon-lg"></i></button>
+      <a href="wishlist.html" class="nav-action-btn"><i data-lucide="heart" class="icon-lg"></i><span class="wishlist-badge" style="display:none">0</span></a>
+      <a href="carrito.html" class="nav-action-btn"><i data-lucide="shopping-cart" class="icon-lg"></i><span class="cart-badge" style="display:none">0</span></a>
     </div>
   </div>
 </nav>
@@ -38,14 +39,14 @@
   <div class="mobile-logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
   <a href="index.html" class="mobile-nav-link">Inicio</a>
   <a href="catalogo.html" class="mobile-nav-link">Catálogo</a>
-  <a href="wishlist.html" class="mobile-nav-link">❤️ Favoritos</a>
-  <a href="carrito.html" class="mobile-nav-link">🛒 Carrito</a>
+  <a href="wishlist.html" class="mobile-nav-link"><i data-lucide="heart"></i> Favoritos</a>
+  <a href="carrito.html" class="mobile-nav-link"><i data-lucide="shopping-cart"></i> Carrito</a>
 </div>
 
 <div id="search-overlay">
   <div class="search-wrapper">
     <input class="search-input" type="text" placeholder="Busca zapatillas, marcas..." autocomplete="off">
-    <button class="search-close" onclick="closeSearch()">✕</button>
+    <button class="search-close" onclick="closeSearch()"><i data-lucide="x"></i></button>
   </div>
   <div id="search-results"></div>
 </div>
@@ -70,13 +71,14 @@
   </div>
 </footer>
 
-<button id="scroll-top">↑</button>
+<button id="scroll-top"><i data-lucide="arrow-up"></i></button>
 
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/wishlist.js"></script>
 <script src="js/search.js"></script>
 <script src="js/ui.js"></script>
+<script>lucide.createIcons();</script>
 <script>
   function renderCart() {
     const cart = getCart();
@@ -88,10 +90,10 @@
     if (!cart.length) {
       root.innerHTML = `
         <div class="empty-cart">
-          <div class="empty-cart-icon">🛒</div>
+          <div class="empty-cart-icon"><i data-lucide="shopping-cart" class="icon-xl"></i></div>
           <h2>TU CARRITO ESTÁ VACÍO</h2>
           <p>Parece que aún no has agregado nada.<br>¡Hay increíbles kicks esperándote!</p>
-          <a href="catalogo.html" class="btn-primary">Explorar catálogo →</a>
+          <a href="catalogo.html" class="btn-primary">Explorar catálogo <i data-lucide="arrow-right"></i></a>
         </div>`;
       return;
     }
@@ -124,7 +126,7 @@
               </div>
               <div class="cart-item-right">
                 <span class="cart-item-price">${formatPrice(item.price)}</span>
-                <button class="cart-item-remove" onclick="handleRemove(${item.id})">✕ Eliminar</button>
+                <button class="cart-item-remove" onclick="handleRemove(${item.id})"><i data-lucide="x-circle"></i> Eliminar</button>
               </div>
             </div>
           `).join('')}
@@ -161,8 +163,8 @@
           <div class="discount-section">
             ${discount ? `
               <div class="applied-discount">
-                <span>🏷 ${discount.code} — ${discount.rate * 100}% off</span>
-                <button class="remove-discount" onclick="handleRemoveDiscount()">✕</button>
+                <span><i data-lucide="tag"></i> ${discount.code} — ${discount.rate * 100}% off</span>
+                <button class="remove-discount" onclick="handleRemoveDiscount()"><i data-lucide="x"></i></button>
               </div>
             ` : `
               <div class="discount-form">
@@ -174,7 +176,7 @@
           </div>
 
           <div class="cart-actions">
-            <a href="checkout.html" class="btn-checkout">PROCEDER AL CHECKOUT →</a>
+            <a href="checkout.html" class="btn-checkout">PROCEDER AL CHECKOUT <i data-lucide="arrow-right"></i></a>
             <a href="catalogo.html" class="btn-continue">← Continuar comprando</a>
           </div>
         </aside>
@@ -185,6 +187,7 @@
   function handleQtyChange(itemId, newQty) {
     updateQuantity(itemId, newQty);
     renderCart();
+    reloadIcons();
   }
 
   function handleRemove(itemId) {
@@ -194,6 +197,7 @@
       setTimeout(() => {
         removeFromCart(itemId);
         renderCart();
+        reloadIcons();
       }, 300);
     }
   }
@@ -207,16 +211,19 @@
       msg.className = 'discount-msg ' + (result.success ? 'success' : 'error');
     }
     if (result.success) {
-      setTimeout(renderCart, 600);
+      setTimeout(() => { renderCart(); reloadIcons(); }, 600);
     }
   }
 
   function handleRemoveDiscount() {
     removeDiscount();
     renderCart();
+    reloadIcons();
   }
 
-  document.addEventListener('DOMContentLoaded', renderCart);
+  function reloadIcons() { if (window.lucide) lucide.createIcons(); }
+
+  document.addEventListener('DOMContentLoaded', () => { renderCart(); reloadIcons(); });
 </script>
 </body>
 </html>

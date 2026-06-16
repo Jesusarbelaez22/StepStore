@@ -320,3 +320,22 @@ section { padding: 80px 0; }
 .search-result-brand { font-size: 0.8rem; color: var(--text-secondary); }
 .search-result-price { font-weight: 700; color: var(--neon); white-space: nowrap; }
 .no-results { text-align: center; padding: 20px; color: var(--text-secondary); background: var(--bg-secondary); border-radius: var(--radius); }
+
+/* ─── Lucide Icons ──────────────────────────────────────────────── */
+i[data-lucide],
+svg[data-lucide] {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  vertical-align: middle;
+  display: inline-block;
+  flex-shrink: 0;
+  fill: none;
+}
+i[data-lucide].icon-sm, svg[data-lucide].icon-sm { width: 16px; height: 16px; }
+i[data-lucide].icon-lg, svg[data-lucide].icon-lg { width: 24px; height: 24px; }
+i[data-lucide].icon-xl, svg[data-lucide].icon-xl { width: 32px; height: 32px; }
+
+.nav-action-btn:hover svg[data-lucide] { stroke: var(--neon); }
+.social-link img { display: block; }

@@ -3,9 +3,10 @@ function showToast(message, type = 'success') {
   const container = document.getElementById('toast-container') || createToastContainer();
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
-  const icons = { success: '✓', error: '✕', info: 'ℹ' };
-  toast.innerHTML = `<span class="toast-icon">${icons[type] || '✓'}</span><span>${message}</span>`;
+  const icons = { success: '<i data-lucide="check-circle"></i>', error: '<i data-lucide="x-circle"></i>', info: '<i data-lucide="info"></i>' };
+  toast.innerHTML = `<span class="toast-icon">${icons[type] || icons.success}</span><span>${message}</span>`;
   container.appendChild(toast);
+  if (window.lucide) lucide.createIcons();
   requestAnimationFrame(() => toast.classList.add('show'));
   setTimeout(() => {
     toast.classList.remove('show');
@@ -26,11 +27,12 @@ function openModal(content) {
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.id = 'modal-overlay';
-    overlay.innerHTML = `<div class="modal-box"><button class="modal-close" onclick="closeModal()">✕</button><div class="modal-body"></div></div>`;
+    overlay.innerHTML = `<div class="modal-box"><button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button><div class="modal-body"></div></div>`;
     overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
     document.body.appendChild(overlay);
   }
   overlay.querySelector('.modal-body').innerHTML = content;
+  if (window.lucide) lucide.createIcons();
   overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -137,7 +139,7 @@ function createProductCard(product) {
         </a>
         ${product.badge ? `<span class="badge badge-${product.badge.toLowerCase()}">${product.badge}</span>` : ''}
         ${discount ? `<span class="badge badge-sale">-${discount}%</span>` : ''}
-        <button class="wishlist-btn ${inWishlist ? 'active' : ''}" data-wishlist-id="${product.id}" onclick="handleWishlistToggle(${product.id}, this)">♥</button>
+        <button class="wishlist-btn ${inWishlist ? 'active' : ''}" data-wishlist-id="${product.id}" onclick="handleWishlistToggle(${product.id}, this)"><i data-lucide="heart"></i></button>
       </div>
       <div class="card-info">
         <span class="card-brand">${product.brand}</span>

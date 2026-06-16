@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/checkout.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="checkout-page">
 
@@ -24,7 +25,7 @@
       <a href="catalogo.html">Catálogo</a>
     </div>
     <div class="nav-actions">
-      <a href="carrito.html" class="nav-action-btn">🛒<span class="cart-badge" style="display:none">0</span></a>
+      <a href="carrito.html" class="nav-action-btn"><i data-lucide="shopping-cart" class="icon-lg"></i><span class="cart-badge" style="display:none">0</span></a>
     </div>
   </div>
 </nav>
@@ -34,7 +35,7 @@
   <div class="mobile-logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
   <a href="index.html" class="mobile-nav-link">Inicio</a>
   <a href="catalogo.html" class="mobile-nav-link">Catálogo</a>
-  <a href="carrito.html" class="mobile-nav-link">🛒 Carrito</a>
+  <a href="carrito.html" class="mobile-nav-link"><i data-lucide="shopping-cart"></i> Carrito</a>
 </div>
 
 <div class="checkout-hero">
@@ -55,7 +56,7 @@
 
       <!-- Personal data -->
       <div class="form-section">
-        <h3 class="form-section-title"><span class="icon">👤</span> Datos personales</h3>
+        <h3 class="form-section-title"><span class="icon"><i data-lucide="user"></i></span> Datos personales</h3>
         <div class="form-row">
           <div class="form-group">
             <label>Nombre *</label>
@@ -84,7 +85,7 @@
 
       <!-- Shipping -->
       <div class="form-section">
-        <h3 class="form-section-title"><span class="icon">📦</span> Dirección de envío</h3>
+        <h3 class="form-section-title"><span class="icon"><i data-lucide="package"></i></span> Dirección de envío</h3>
         <div class="form-group">
           <label>Dirección *</label>
           <input class="form-control" type="text" id="address" placeholder="Calle 123 # 45-67" required>
@@ -120,10 +121,10 @@
 
       <!-- Payment -->
       <div class="form-section">
-        <h3 class="form-section-title"><span class="icon">💳</span> Método de pago</h3>
+        <h3 class="form-section-title"><span class="icon"><i data-lucide="credit-card"></i></span> Método de pago</h3>
         <div class="payment-methods-select">
           <button class="payment-method-btn active" onclick="selectPayment('card', this)">
-            <span class="payment-method-icon">💳</span>
+            <span class="payment-method-icon"><i data-lucide="credit-card"></i></span>
             <div>
               <div class="payment-method-name">Tarjeta de crédito/débito</div>
               <div class="payment-method-desc">Visa, Mastercard, American Express</div>
@@ -131,7 +132,7 @@
             <div class="payment-radio"></div>
           </button>
           <button class="payment-method-btn" onclick="selectPayment('pse', this)">
-            <span class="payment-method-icon">🏦</span>
+            <span class="payment-method-icon"><i data-lucide="landmark"></i></span>
             <div>
               <div class="payment-method-name">PSE</div>
               <div class="payment-method-desc">Débito desde tu cuenta bancaria</div>
@@ -139,7 +140,7 @@
             <div class="payment-radio"></div>
           </button>
           <button class="payment-method-btn" onclick="selectPayment('nequi', this)">
-            <span class="payment-method-icon">📱</span>
+            <span class="payment-method-icon"><i data-lucide="smartphone"></i></span>
             <div>
               <div class="payment-method-name">Nequi / Daviplata</div>
               <div class="payment-method-desc">Pago con billetera digital</div>
@@ -147,7 +148,7 @@
             <div class="payment-radio"></div>
           </button>
           <button class="payment-method-btn" onclick="selectPayment('efecty', this)">
-            <span class="payment-method-icon">💵</span>
+            <span class="payment-method-icon"><i data-lucide="dollar-sign"></i></span>
             <div>
               <div class="payment-method-name">Efecty / Baloto</div>
               <div class="payment-method-desc">Pago en puntos autorizados</div>
@@ -185,8 +186,8 @@
       <div class="order-items" id="order-items"></div>
       <div class="order-divider"></div>
       <div class="order-totals" id="order-totals"></div>
-      <button class="btn-place-order" onclick="placeOrder()">CONFIRMAR PEDIDO →</button>
-      <div class="secure-badge"><span>🔒</span> Pago 100% seguro y encriptado</div>
+      <button class="btn-place-order" onclick="placeOrder()">CONFIRMAR PEDIDO <i data-lucide="arrow-right"></i></button>
+      <div class="secure-badge"><i data-lucide="lock"></i> Pago 100% seguro y encriptado</div>
     </aside>
   </div>
 </div>
@@ -200,13 +201,14 @@
   </div>
 </footer>
 
-<button id="scroll-top">↑</button>
+<button id="scroll-top"><i data-lucide="arrow-up"></i></button>
 
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/wishlist.js"></script>
 <script src="js/search.js"></script>
 <script src="js/ui.js"></script>
+<script>lucide.createIcons();</script>
 <script>
   let selectedPayment = 'card';
 
@@ -310,6 +312,7 @@
   // Real-time validation listeners
   document.addEventListener('DOMContentLoaded', () => {
     renderOrderSummary();
+    if (window.lucide) lucide.createIcons();
 
     const cardNum = document.getElementById('card-number');
     if (cardNum) cardNum.addEventListener('input', () => formatCardNumber(cardNum));

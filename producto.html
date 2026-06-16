@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/producto.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="product-page">
 
@@ -27,9 +28,9 @@
       <a href="catalogo.html">Marcas</a>
     </div>
     <div class="nav-actions">
-      <button class="nav-action-btn search-trigger">🔍</button>
-      <a href="wishlist.html" class="nav-action-btn">❤️<span class="wishlist-badge" style="display:none">0</span></a>
-      <a href="carrito.html" class="nav-action-btn">🛒<span class="cart-badge" style="display:none">0</span></a>
+      <button class="nav-action-btn search-trigger"><i data-lucide="search" class="icon-lg"></i></button>
+      <a href="wishlist.html" class="nav-action-btn"><i data-lucide="heart" class="icon-lg"></i><span class="wishlist-badge" style="display:none">0</span></a>
+      <a href="carrito.html" class="nav-action-btn"><i data-lucide="shopping-cart" class="icon-lg"></i><span class="cart-badge" style="display:none">0</span></a>
     </div>
   </div>
 </nav>
@@ -39,14 +40,14 @@
   <div class="mobile-logo"><span class="neon">S</span>TEP <span class="neon">S</span>TORE</div>
   <a href="index.html" class="mobile-nav-link">Inicio</a>
   <a href="catalogo.html" class="mobile-nav-link">Catálogo</a>
-  <a href="wishlist.html" class="mobile-nav-link">❤️ Favoritos</a>
-  <a href="carrito.html" class="mobile-nav-link">🛒 Carrito</a>
+  <a href="wishlist.html" class="mobile-nav-link"><i data-lucide="heart"></i> Favoritos</a>
+  <a href="carrito.html" class="mobile-nav-link"><i data-lucide="shopping-cart"></i> Carrito</a>
 </div>
 
 <div id="search-overlay">
   <div class="search-wrapper">
     <input class="search-input" type="text" placeholder="Busca zapatillas, marcas..." autocomplete="off">
-    <button class="search-close" onclick="closeSearch()">✕</button>
+    <button class="search-close" onclick="closeSearch()"><i data-lucide="x"></i></button>
   </div>
   <div id="search-results"></div>
 </div>
@@ -105,13 +106,14 @@
   </div>
 </footer>
 
-<button id="scroll-top">↑</button>
+<button id="scroll-top"><i data-lucide="arrow-up"></i></button>
 
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/wishlist.js"></script>
 <script src="js/search.js"></script>
 <script src="js/ui.js"></script>
+<script>lucide.createIcons();</script>
 <script>
   let currentProduct = null;
   let selectedSize = null;
@@ -158,7 +160,8 @@
     const btn = document.getElementById('wishlist-main-btn');
     const added = toggleWishlist(currentProduct.id);
     btn.classList.toggle('active', added);
-    btn.querySelector('.heart-icon').textContent = added ? '♥' : '♡';
+    const label = btn.querySelector('.wish-label');
+    if (label) label.textContent = added ? 'EN FAVORITOS' : 'AGREGAR A FAVORITOS';
     showToast(added ? '¡Agregado a favoritos!' : 'Eliminado de favoritos', added ? 'success' : 'info');
   }
 
@@ -248,7 +251,7 @@
         <div class="product-cta">
           <button class="btn-add-main" onclick="addToCartProduct()">AGREGAR AL CARRITO</button>
           <button class="btn-wishlist-main ${inWish ? 'active' : ''}" id="wishlist-main-btn" onclick="toggleWishlistProduct()">
-            <span class="heart-icon">${inWish ? '♥' : '♡'}</span> ${inWish ? 'EN FAVORITOS' : 'AGREGAR A FAVORITOS'}
+            <i data-lucide="heart" class="heart-icon"></i> <span class="wish-label">${inWish ? 'EN FAVORITOS' : 'AGREGAR A FAVORITOS'}</span>
           </button>
         </div>
 
@@ -278,6 +281,7 @@
     const related = PRODUCTS.filter(p => p.id !== product.id && (p.brand === product.brand || p.category === product.category)).slice(0, 4);
     document.getElementById('related-grid').innerHTML = related.map(p => createProductCard(p)).join('');
     updateAllWishlistButtons();
+    if (window.lucide) lucide.createIcons();
   }
 
   function generateFakeReviews(product) {
@@ -311,11 +315,12 @@
     } else {
       document.getElementById('product-layout').innerHTML = `
         <div class="empty-state" style="grid-column:1/-1">
-          <div class="empty-icon">👟</div>
+          <div class="empty-icon"><i data-lucide="package" class="icon-xl"></i></div>
           <h3>Producto no encontrado</h3>
           <p>El producto que buscas no existe o fue removido.</p>
           <a href="catalogo.html" class="btn-primary">Ir al catálogo</a>
         </div>`;
+      if (window.lucide) lucide.createIcons();
     }
   });
 </script>
